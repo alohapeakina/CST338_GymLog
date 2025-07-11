@@ -10,6 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gymlog.databinding.ActivityMainBinding;
 import java.util.Locale;
 
+/**
+ * @author Andrew Lee
+ * Created: 7/11/2025
+ * Explanation: Mobile app to log and track gym activities
+ */
 public class MainActivity extends AppCompatActivity {
 
   ActivityMainBinding binding;
