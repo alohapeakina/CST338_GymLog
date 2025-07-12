@@ -12,6 +12,9 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.GymLog">
     <activity
+      android:exported="false"
+      android:name=".LoginActivity" />
+    <activity
       android:exported="true"
       android:name=".MainActivity">
       <intent-filter>

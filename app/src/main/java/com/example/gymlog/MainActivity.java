@@ -1,5 +1,7 @@
 package com.example.gymlog;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.text.method.ScrollingMovementMethod;
@@ -20,6 +22,7 @@ import java.util.Locale;
  */
 public class MainActivity extends AppCompatActivity {
 
+  private static final String MAIN_ACTIVITY_USER_ID = "com.example.gymlog.MAIN_ACTIVITY_USER_ID";
   private ActivityMainBinding binding;
   private GymLogRepository repository;
 
@@ -37,8 +40,15 @@ public class MainActivity extends AppCompatActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
-    repository = GymLogRepository.getRepository(getApplication());
+    loginUser();
 
+    if(loggedInUserId == -1){
+      Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+      startActivity(intent);
+    }
+
+
+    repository = GymLogRepository.getRepository(getApplication());
     binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
     updateDisplay();
     binding.logButton.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
         updateDisplay();
       }
     });
+  }
+
+  private void loginUser() {
+    //TODO: Create login method
+    loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID,-1);
+  }
+
+  static Intent mainActivityIntentFactory(Context context, int userID){
+    Intent intent = new Intent(context, MainActivity.class);
+    intent.putExtra(MAIN_ACTIVITY_USER_ID,userID);
+    return intent;
   }
 
   private void insertGymLogRecord(){
