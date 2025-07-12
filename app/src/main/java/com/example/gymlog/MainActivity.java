@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
       if(this.user != null){
         invalidateOptionsMenu();
       } else {
-        logout();
+//        logout();
+        //TODO: Verify this was an issue
       }
     });
   }
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void updateDisplay(){
-    ArrayList<GymLog> allLogs = repository.getAllLogs();
+    ArrayList<GymLog> allLogs = repository.getAllLogsByUserId(loggedInUserId);
     if( allLogs.isEmpty() ){
       binding.logDisplayTextView.setText(R.string.nothing_to_show_time_to_hit_the_gym);
     }
