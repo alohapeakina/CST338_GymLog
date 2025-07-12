@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.gymlog.database.GymLogRepository;
+import com.example.gymlog.database.entities.GymLog;
 import com.example.gymlog.databinding.ActivityMainBinding;
 import java.util.Locale;
 
@@ -17,7 +19,8 @@ import java.util.Locale;
  */
 public class MainActivity extends AppCompatActivity {
 
-  ActivityMainBinding binding;
+  private ActivityMainBinding binding;
+  private GymLogRepository repository;
 
   public static final String TAG = "GYMLOG";
   String mExercise = "";
@@ -30,23 +33,31 @@ public class MainActivity extends AppCompatActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
+    repository = GymLogRepository.getRepository(getApplication());
+
     binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
 
     binding.logButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         getInformationFromDisplay();
+        insertGymLogRecord();
         updateDisplay();
       }
     });
+  }
+
+  private void insertGymLogRecord(){
+    GymLog log = new GymLog(mExercise, mWeight, mReps);
+    repository.insertGymLog(log);
   }
 
   private void updateDisplay(){
     String currentInfo = binding.logDisplayTextView.getText().toString();
     Log.d(TAG,"current info: " + currentInfo);
     String newDisplay = String.format(Locale.US,"Execise:%s%nWeight:%.2f%nReps:%d%n=-=-=-=%n%s",mExercise,mWeight,mReps,currentInfo);
-
     binding.logDisplayTextView.setText(newDisplay);
+    Log.i(TAG,repository.getAllLogs().toString());
   }
 
   private void getInformationFromDisplay(){
