@@ -15,7 +15,11 @@ import java.util.List;
  */
 @Dao
 public interface UserDAO {
-@Insert(onConflict = OnConflictStrategy.REPLACE)
+
+  @Query("SELECT * FROM " + GymLogDatabase.USER_TABLE + " WHERE username == :username")
+  User getUserByUserName(String username);
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insert(User... user);
 
 @Delete
