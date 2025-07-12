@@ -94,15 +94,6 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    //TODO: Remove this block
-/*    binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-//        updateDisplay();
-      }
-    });*/
-
-
   }
 
 
