@@ -13,11 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.example.gymlog.database.GymLogRepository;
@@ -25,7 +22,6 @@ import com.example.gymlog.database.entities.GymLog;
 import com.example.gymlog.database.entities.User;
 import com.example.gymlog.databinding.ActivityMainBinding;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * @author Andrew Lee
@@ -37,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
   private static final String MAIN_ACTIVITY_USER_ID = "com.example.gymlog.MAIN_ACTIVITY_USER_ID";
   static final String SHARED_PREFERENCE_USERID_KEY = "com.example.gymlog.SHARED_PREFERENCE_USERID_KEY";
 
+  static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.example.gymlog.SAVED_INSTANCE_STATE_USERID_KEY";
   private static final String SHARED_PREFERENCE_USERID_VALUE = "com.example.gymlog.SHARED_PREFERENCE_USERID_VALUE";
   private static final int LOGGED_OUT = -1;
   private ActivityMainBinding binding;
@@ -56,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
-    loginUser();
+    repository = GymLogRepository.getRepository(getApplication());
+    loginUser(savedInstanceState);
 
     if(loggedInUserId == -1){
       Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
       startActivity(intent);
     }
 
-    repository = GymLogRepository.getRepository(getApplication());
+
     binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
     updateDisplay();
     binding.logButton.setOnClickListener(new View.OnClickListener() {
@@ -76,23 +74,31 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-  private void loginUser() {
+
+  private void loginUser(Bundle savedInstanceState) {
     //Check shared preference for logged in user
-    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY,
+    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY,
         Context.MODE_PRIVATE);
-    loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE,LOGGED_OUT);
-    if(loggedInUserId != LOGGED_OUT){
-      return;
+
+    if (sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)){
+      loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE,LOGGED_OUT);
     }
-    //Check intent for logged in user
-    loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID,LOGGED_OUT);
+    if (loggedInUserId == LOGGED_OUT & savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)){
+      loggedInUserId = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY,LOGGED_OUT);
+    }
+    if(loggedInUserId != LOGGED_OUT){
+      loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID,LOGGED_OUT);
+    }
     if(loggedInUserId == LOGGED_OUT){
       return;
     }
     LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
     userObserver.observe(this,user -> {
-      if(user != null){
+      this.user = user;
+      if(this.user != null){
         invalidateOptionsMenu();
+      } else {
+        logout();
       }
     });
   }
