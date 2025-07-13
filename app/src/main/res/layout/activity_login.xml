@@ -49,6 +49,7 @@
     android:layout_width="match_parent"
     android:layout_height="105dp"
     android:layout_margin="16dp"
+    android:backgroundTint="#689466"
     android:text="@string/login"
     android:textSize="32sp"
     app:layout_constraintEnd_toEndOf="parent"

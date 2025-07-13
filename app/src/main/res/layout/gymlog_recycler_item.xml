@@ -9,6 +9,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="2dp"
+    android:background="#e0b457"
     android:text="HELLO"
     android:textSize="18sp" />
 
