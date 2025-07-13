@@ -5,18 +5,27 @@
   android:id="@+id/main"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:fitsSystemWindows="true"
   tools:context=".MainActivity">
+
+<!--  <com.google.android.material.appbar.MaterialToolbar
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/logDisplayRecyclerView"
+    android:background="@color/white"
+    app:title="hey"
+    app:menu="@menu/logout_menu"
+    app:titleTextColor="@color/black"/>-->
 
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/logDisplayRecyclerView"
     android:layout_width="0dp"
     android:layout_height="400dp"
-    android:layout_marginTop="16dp"
-    android:paddingTop="100dp"
-    android:paddingStart="2dp"
-    android:paddingEnd="2dp"
-    android:paddingBottom="2dp"
+    android:layout_marginTop="6dp"
+    android:padding="2dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +96,7 @@
     android:layout_width="390dp"
     android:layout_height="125dp"
     android:layout_marginTop="16dp"
-    android:backgroundTint="#6b92b6"
+    android:backgroundTint="@color/oceanblue"
     android:text="@string/log"
     android:textSize="36sp"
     app:layout_constraintEnd_toEndOf="parent"

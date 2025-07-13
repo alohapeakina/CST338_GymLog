@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:fitsSystemWindows="true"
   android:orientation="vertical">
   <TextView
     android:id="@+id/recyclerItemTextView"
@@ -9,7 +10,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="2dp"
-    android:background="#e0b457"
+    android:background="@color/sunshine"
     android:text="HELLO"
     android:textSize="18sp" />
 

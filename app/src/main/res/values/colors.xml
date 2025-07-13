@@ -2,4 +2,9 @@
 <resources>
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
+  <color name="valleygreen">#689466</color>
+  <color name="sunshine">#e0b457</color>
+  <color name="monbayblue">#31456b</color>
+  <color name="oceanblue">#6b92b6</color>
+
 </resources>
