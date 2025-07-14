@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * @author Andrew Lee
  * created: 7/11/2025
- * Explanation:
+ * Explanation: POJO for Users in database
  */
 @Entity(tableName = GymLogDatabase.USER_TABLE)
 public class User {

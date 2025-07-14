@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
 /**
  * @author Andrew Lee
  * created 7/11/2025
- * Explanation:
+ * Explanation: Data access and operations for GymLog application
  */
 public class GymLogRepository {
   private final GymLogDAO gymLogDAO;
