@@ -79,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     updateSharedPreference();
+
+    binding.logButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        getInformationFromDisplay();
+        insertGymLogRecord();
+      }
+    });
+
   }
 
 
